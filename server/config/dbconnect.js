@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const { default: mongoose } = require('mongoose');
 
 // Thiết lập cấu hình để chuẩn bị cho sự thay đổi trong Mongoose 7
 mongoose.set('strictQuery', false); // Hoặc true, tùy thuộc vào lựa chọn của bạn
