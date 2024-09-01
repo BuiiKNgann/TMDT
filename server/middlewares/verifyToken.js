@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
 
-
+//Hàm kiểm tra token
 const verifyAccessToken = asyncHandler(async (req, res, next) => {
     // Bearer token
     // headers: { authorization: Bearer token}
