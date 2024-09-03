@@ -6,6 +6,7 @@ var couponSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        uppercase: true
 
     },
     discount: {
@@ -14,9 +15,9 @@ var couponSchema = new mongoose.Schema({
 
     },
     expiry: {
-        type: Data,
+        type: Date,
         required: true,
-        unique: true,
+
     },
 
 }, { timestamps: true });

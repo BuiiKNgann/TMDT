@@ -4,6 +4,7 @@ const { generateAccessToken, generateRefreshToken } = require('../middlewares/jw
 const jwt = require('jsonwebtoken')
 const sendMail = require('../ultils/sendMail')
 const crypto = require('crypto')
+const product = require('../models/product')
 
 const register = asyncHandler(async (req, res) => {
     const { email, password, firstname, lastname } = req.body
@@ -192,7 +193,54 @@ const updateUserByAdmin = asyncHandler(async (req, res) => {
     })
 })
 
+const updateUserAddress = asyncHandler(async (req, res) => {
+    //
+    const { _id } = req.user  // Truy xuất tham số userId từ URL
+    if (!req.body.address) throw new Error('Missing inputs') /// check xem body có rỗng k 
+    const response = await User.findByIdAndUpdate(_id, { $push: { address: req.body.address } }, { new: true }).select('-password -role -refreshToken')
+    return res.status(200).json({
+        success: response ? true : false,
+        updatedUser: response ? response : 'Some thing went wrong'
+    })
+})
+
+const updateCart = asyncHandler(async (req, res) => {
+    const { _id } = req.user  // Truy xuất tham số userId từ URL
+    const { pid, quantity, color } = req.body
+    if (!pid || !quantity || !color) throw new Error('Missing inputs') /// check xem body có rỗng k 
+    const user = await User.findById(_id).select('cart')
+    const alreadyProduct = user?.cart?.find(el => el.product.toString() === pid)
+    if (alreadyProduct) {
+        // cập nhật nếu màu sắc trùng khớp
+        if (alreadyProduct.color === color) {
+            const response = await User.updateOne({ cart: { $elemMatch: alreadyProduct } }, { $set: { "cart.$.quantity": quantity } }, { new: true })
+            return res.status(200).json({
+                success: response ? true : false,
+                updatedUser: response ? response : 'Some thing went wrong'
+            })
+
+        } else {
+            // Thêm sản phẩm mới với màu sắc khác vào giỏ hàng
+            const response = await User.findByIdAndUpdate(_id, { $push: { cart: { product: pid, quantity, color } } }, { new: true })
+            return res.status(200).json({
+                success: response ? true : false,
+                updatedUser: response ? response : 'Some thing went wrong'
+            })
+        }
+    } else {
+        // Thêm sản phẩm mới vào giỏ hàng vì chưa tồn tại
+        const response = await User.findByIdAndUpdate(_id, { $push: { cart: { product: pid, quantity, color } } }, { new: true })
+        return res.status(200).json({
+            success: response ? true : false,
+            updatedUser: response ? response : 'Some thing went wrong'
+        })
+    }
+
+})
+
+
 module.exports = {
     register, login, getCurrent, refreshAccessToken, logout,
-    forgotPassword, resetPassword, getUsers, deleteUsers, updateUsers, updateUserByAdmin
+    forgotPassword, resetPassword, getUsers,
+    deleteUsers, updateUsers, updateUserByAdmin, updateUserAddress, updateCart
 }

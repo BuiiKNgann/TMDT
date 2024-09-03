@@ -4,6 +4,8 @@ const productCategoryRouter = require('./productCategory')
 const blogCategoryRouter = require('./blogCategory')
 const blog = require('./blog')
 const brand = require('./brand')
+const coupon = require('./coupon')
+const order = require('./order')
 const { notFound, errHandler } = require('../middlewares/errHandler')
 
 
@@ -14,6 +16,8 @@ const initRoutes = (app) => {
     app.use('/api/blogCategory', blogCategoryRouter)
     app.use('/api/blog', blog)
     app.use('/api/brand', brand)
+    app.use('/api/coupon', coupon)
+    app.use('/api/order', order)
     app.use(notFound)
     app.use(errHandler) // lỗi được hứng từ asyncHandler
 }
