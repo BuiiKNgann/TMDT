@@ -67,7 +67,6 @@ const getOrders = asyncHandler(async (req, res) => {
     })
 })
 
-
 module.exports = {
     createOrder, updateStatus, getUserOrder, getOrders
 }

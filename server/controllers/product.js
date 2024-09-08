@@ -154,12 +154,12 @@ const uploadImagesProduct = asyncHandler(async (req, res) => {
         status: response ? true : false,
         updatedProduct: response ? response : 'Cannot upload images product'
     })
-
-
 })
+
 
 
 module.exports = {
     createProduct, getProduct, getProducts,
-    updateProduct, deleteProduct, ratings, uploadImagesProduct
+    updateProduct, deleteProduct,
+    ratings, uploadImagesProduct,
 }
