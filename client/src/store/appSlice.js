@@ -9,10 +9,10 @@ export const appSlice = createSlice({
         isLoading: false,
     },
     reducers: {
-        logout: (state) => {
-            state.isLoading = false;
+        // logout: (state) => {
+        //     state.isLoading = false;
 
-        }
+        // }
 
     },
     // Code logic xử lý async action
@@ -24,9 +24,9 @@ export const appSlice = createSlice({
         });
 
         builder.addCase(actions.getCategories.fulfilled, (state, action) => {
-            console.log(action);
+            // console.log(action);
             state.isLoading = false;
-            state.categories = action.payload.prodCategories;
+            state.categories = action.payload;
         });
         builder.addCase(actions.getCategories.rejected, (state, action) => {
 
@@ -36,5 +36,5 @@ export const appSlice = createSlice({
     }
 })
 
-export const { } = appSlice.actions
+// export const { } = appSlice.actions
 export default appSlice.reducer
