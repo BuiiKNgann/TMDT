@@ -4,15 +4,15 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { createSlug } from '../ultils/helpers'
 import { useSelector } from 'react-redux'
-
 const Sidebar = () => {
     const { categories } = useSelector(state => state.app)
-    //console.log(categories);
+
 
     return (
 
         <div className="flex flex-col border">
             {categories?.map(el => (
+                // sử dụng navlink để trả về thuộc tính cho biết là link nào đang đc active
                 <NavLink
                     key={createSlug(el.title)}
                     to={createSlug(el.title)}
