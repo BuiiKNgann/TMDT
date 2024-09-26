@@ -5,21 +5,26 @@ import trending from '../assets/trending.png'
 import { renderStartFromNumber } from '../ultils/helpers'
 import { SelectOption } from './'
 import icons from '../ultils/icons'
+import { Link } from 'react-router-dom'
+import path from '../ultils/path'
 
 const { AiFillEye, IoMdMenu, FaHeart } = icons
 const Product = ({ productData, isNew }) => {
-    const [isShowOption, setisShowOption] = useState(false)
+    const [isShowOption, setIsShowOption] = useState(false)
+
+    //chi-tiet-san-pham/pid/title/sdasdsd
     return (
         <div className='w-full text-base px-[10px]'>
-            <div
+            <Link
                 className='w-full border p-[15px] flex-col items-center'
+                to={`/${path.DETAIL_PRODUCT}/${productData?._id}/${productData?.title}`}
                 onMouseEnter={e => {
                     e.stopPropagation()
-                    setisShowOption(true)
+                    setIsShowOption(true)
                 }}
                 onMouseLeave={e => {
                     e.stopPropagation()
-                    setisShowOption(false)
+                    setIsShowOption(false)
                 }}
             >
                 <div className='w-full relative'>
@@ -43,7 +48,7 @@ const Product = ({ productData, isNew }) => {
                     <span className='line-clamp-1'>{productData?.title}</span>
                     <span>{`${formatMoney(productData?.price)} VNĐ`}</span>
                 </div>
-            </div>
+            </Link>
 
         </div>
 
