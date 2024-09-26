@@ -4,7 +4,7 @@ import { BsFillHandbagFill } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 import { AiFillHome, AiFillEye } from "react-icons/ai";
 import { MdOutlineStar, MdOutlineStarPurple500 } from "react-icons/md";
-import { IoMdMenu } from "react-icons/io";
+import { IoMdMenu, IoIosArrowForward } from "react-icons/io";
 import { FaHeart } from "react-icons/fa";
 
 const icons = {
@@ -17,7 +17,8 @@ const icons = {
     MdOutlineStarPurple500,
     AiFillEye,
     IoMdMenu,
-    FaHeart
+    FaHeart,
+    IoIosArrowForward
 
 }
 
