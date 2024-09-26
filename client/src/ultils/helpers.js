@@ -16,45 +16,10 @@ export const renderStartFromNumber = (number, size) => {
 }
 
 
-// import icons from "./icons"
-
-// const { MdOutlineStar, MdOutlineStarPurple500 } = icons
-
-// // Hàm tạo slug từ chuỗi văn bản
-// export const createSlug = string =>
-//     string.toLowerCase()
-//         .normalize('NFD')
-//         .replace(/[\u0300-\u036f]/g, "")
-//         .split(' ')
-//         .join('-');
-
-// // Hàm định dạng tiền tệ, kiểm tra giá trị 'number' trước khi gọi toFixed()
-// export const formatMoney = number => {
-//     // Kiểm tra nếu number không hợp lệ, trả về '0' hoặc giá trị mặc định
-//     if (isNaN(number) || number === undefined || number === null) {
-//         return "0";
-//     }
-
-//     return Number(number.toFixed(1)).toLocaleString();
-// };
-
-// // Hàm hiển thị các ngôi sao dựa trên số sao và kích thước (size)
-// export const renderStartFromNumber = (number, size) => {
-//     // Chuyển đổi number sang kiểu số và kiểm tra giá trị hợp lệ
-//     const parsedNumber = Number(number);
-//     if (!parsedNumber) return;
-
-//     const stars = [];
-
-//     // Hiển thị số sao đã được đánh giá (MdOutlineStarPurple500)
-//     for (let i = 0; i < parsedNumber; i++) {
-//         stars.push(<MdOutlineStarPurple500 color="orange" size={size || 16} />);
-//     }
-
-//     // Hiển thị các sao còn lại (MdOutlineStar)
-//     for (let i = 5; i > parsedNumber; i--) {
-//         stars.push(<MdOutlineStar color="orange" size={size || 16} />);
-//     }
-
-//     return stars;
-// };
+export function secondsToHms(d) {
+    d = Number(d) / 1000
+    const h = Math.floor(d / 3600);
+    const m = Math.floor(d % 3600 / 60);
+    const s = Math.floor(d % 3600 % 60);
+    return ({ h, m, s })
+}

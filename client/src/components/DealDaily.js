@@ -1,8 +1,11 @@
 import React, { useState, useEffect, memo } from 'react'
 import icons from '../ultils/icons'
 import { apiGetProducts } from '../apis/product'
-import { renderStartFromNumber, formatMoney } from '../ultils/helpers'
+import { renderStartFromNumber, formatMoney, secondsToHms } from '../ultils/helpers'
 import { Countdown } from './'
+import moment from 'moment';
+
+
 const { MdOutlineStarPurple500, IoMdMenu } = icons
 let idInterval
 const DealDaily = () => {
@@ -14,10 +17,20 @@ const DealDaily = () => {
     const fetchDealDaily = async () => {
         const response = await apiGetProducts({ limit: 1, page: Math.round(Math.random() * 10), totalRatings: 5 })
         if (response.success) {
+
             setDealdaily(response.products[0])
-            setHour(1)
-            setMinute(2)
-            setSecond(2)
+            const today = `${moment().format('MM/DD/YYYY')} 5:00:00`
+            const seconds = new Date(today).getTime() - new Date().getTime() + 24 * 3600 * 1000
+            // 5h ngày hôm nay + số milisecond 1 ngày - thời gian ngày hôm nay = tổng số giây từ thời điểm hiện tại tới 5h sáng người mai
+            const number = secondsToHms(seconds)
+
+            setHour(number.h)
+            setMinute(number.m)
+            setSecond(number.s)
+        } else {
+            setHour(0)
+            setMinute(59)
+            setSecond(59)
         }
 
     }
@@ -31,17 +44,17 @@ const DealDaily = () => {
     }, [expireTime])
     useEffect(() => {
         idInterval = setInterval(() => {
-            console.log('interval');
+
             if (second > 0) setSecond(prev => prev - 1)
             else {
                 if (minute > 0) {
                     setMinute(prev => prev - 1)
-                    setSecond(2)
+                    setSecond(59)
                 } else {
                     if (hour > 0) {
                         setHour(prev => prev - 1)
-                        setMinute(2)
-                        setSecond(2)
+                        setMinute(59)
+                        setSecond(59)
                     } else {
                         setExpireTime(!expireTime)
                     }
